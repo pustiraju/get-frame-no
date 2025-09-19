@@ -1,41 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Frame No Extractor</title>
-</head>
-<body>
-  <h2>Upload Image to Extract Frame No</h2>
-  <input type="file" id="fileInput">
-  <button onclick="uploadImage()">Upload & Extract</button>
+    <head>
+        <meta charset="UTF-8">
+        <title>Frame No Extractor</title>
+    </head>
+    <body>
+        <h2>Upload Image to Extract Frame No</h2>
+        <input type="file" id="fileInput">
+        <button onclick="uploadImage()">Upload & Extract</button>
 
-  <h3>Frame No:</h3>
-  <pre id="result"></pre>
+        <h3>Frame No:</h3>
+        <pre id="result"></pre>
 
-  <script>
-    async function uploadImage() {
-      const file = document.getElementById("fileInput").files[0];
-      if (!file) {
-        alert("Please select an image");
-        return;
-      }
+        <script>
+            async function uploadImage() {
+                const file = document
+                    .getElementById("fileInput")
+                    .files[0];
+                if (!file) {
+                    alert("Please select an image");
+                    return;
+                }
 
-      const formData = new FormData();
-      formData.append("image", file);
+                const formData = new FormData();
+                formData.append("image", file);
 
-      try {
-        const response = await fetch("https://m03flx5dc6.execute-api.us-east-1.amazonaws.com/get-frame-no", {
-          method: "POST",
-          body: formData
-        });
+                try {
+                    const response = await fetch(
+                        "https://m03flx5dc6.execute-api.us-east-1.amazonaws.com/get-frame-no",
+                        {
+                            method: "POST",
+                            body: formData
+                        }
+                    );
 
-        const data = await response.json();
-        document.getElementById("result").innerText = data.frameNo || "Not found";
-      } catch (err) {
-        console.error(err);
-        alert("Error extracting Frame No");
-      }
-    }
-  </script>
-</body>
+                    const data = await response.json();
+                    document
+                        .getElementById("result")
+                        .innerText = data.frameNo || "Not found";
+                } catch (err) {
+                    console.error(err);
+                    alert("Error extracting Frame No");
+                }
+            }
+        </script>
+    </body>
 </html>
