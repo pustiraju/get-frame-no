@@ -38,6 +38,8 @@
                     document
                         .getElementById("result")
                         .innerText = data.frameNo || "Not found";
+                        console.log(data);
+                        
                 } catch (err) {
                     console.error(err);
                     alert("Error extracting Frame No");
