@@ -5,28 +5,39 @@
   <title>Frame No Extractor</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-100 flex items-center justify-center min-h-screen">
-  <div class="bg-white shadow-lg rounded-xl p-8 w-full max-w-md text-center">
-    <h2 class="text-2xl font-bold text-gray-700 mb-6">Upload Image to Extract Frame No</h2>
+<body class="bg-gray-900  flex items-center justify-center min-h-screen"> ">
+  <div class="shadow-lg rounded-xl p-2 w-3/4 text-center">
+    <h2 class="text-2xl font-bold text-blue-700 mb-6">Upload Image For Frame No</h2>
 
     <!-- Unified Drop & Upload Zone -->
     <div id="dropZone" 
-      class="relative flex items-center justify-center w-full h-80 border-2 border-dashed border-gray-400 rounded-lg text-gray-500 cursor-pointer transition hover:border-blue-500 hover:text-blue-500 overflow-hidden"
+      class="relative flex items-center justify-center w-full h-80 border-2 border-dashed border-gray-400 rounded-lg text-gray-500 cursor-pointer transition hover:border-blue-500 hover:bg-blue-100 overflow-hidden"
     >
       <span id="dropText" class="absolute z-10">Drag & drop an image here or click to select</span>
       <img id="previewImg" class="absolute inset-0 w-full h-full object-contain hidden" />
     </div>
     <input type="file" id="fileInput" class="hidden" accept="image/*">
 
-    <!-- Result -->
-    <h3 class="text-lg font-semibold text-gray-700 mt-6">Frame No:</h3>
-    <pre id="result" class="bg-gray-100 p-3 rounded-lg text-gray-800 mt-2"></pre>
+  <div class="flex items-center justify-center">
+     <div class="w-1/2 overflow-hidden"> 
+       <p id="alltext" class="text-blue-500"> ALL IAMGE DATA</p>
+    </div>
 
 
-     <!-- Auto-copy toggle -->
+
+    <div class="w-1/2 flex flex-col items-center"> 
+       <!-- Result -->
+    <h3 class="text-lg font-semibold text-blue-700 mt-6">Frame No:</h3>
+    <pre id="result" class="bg-gray-100 w-1/2 text-centerrounded-lg text-lg text-red-500 mt-2 transition-colors duration-300"></pre>
+
+    <!-- Auto-copy toggle -->
     <button id="autoCopyBtn" class="mt-4 bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-lg transition">
       Auto Copy: OFF
-    </button>
+    </button> 
+    </div>
+   
+    </div>
+    
   </div>
 
   <script>
@@ -35,6 +46,7 @@
     const dropText = document.getElementById("dropText");
     const previewImg = document.getElementById("previewImg");
     const result = document.getElementById("result");
+    const allData = document.getElementById("alltext");
     const autoCopyBtn = document.getElementById("autoCopyBtn");
 
     let selectedFile = null;
@@ -75,12 +87,20 @@
         );
 
         const data = await response.json();
+        allData.innerText = JSON.stringify(data);
         const frameNo = data.frameNo || "Not found";
         result.innerText = frameNo;
 
+        // Auto copy if enabled
         if (autoCopy && frameNo !== "Not found") {
           await navigator.clipboard.writeText(frameNo);
           console.log(`Copied to clipboard: ${frameNo}`);
+
+          // Change background color temporarily
+          result.classList.add("bg-green-600");
+          setTimeout(() => {
+            result.classList.remove("bg-green-600");
+          }, 1000); // 1 second
         }
       } catch (err) {
         console.error(err);
