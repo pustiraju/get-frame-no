@@ -1,16 +1,16 @@
-
-            const dropZone = document.getElementById("dropZone");
+ const dropZone = document.getElementById("dropZone");
             const fileInput = document.getElementById("fileInput");
             const dropText = document.getElementById("dropText");
             const previewImg = document.getElementById("previewImg");
             const result = document.getElementById("result");
             const allData = document.getElementById("alltext");
             const autoCopyBtn = document.getElementById("autoCopyBtn");
+            const loader = document.getElementById("loader");
 
             let selectedFile = null;
             let autoCopy = false;
 
-            // Toggle auto-copy
+          
             autoCopyBtn.addEventListener("click", () => {
                 autoCopy = !autoCopy;
                 autoCopyBtn.innerText = `Auto Copy: ${autoCopy
@@ -30,12 +30,8 @@
                 const reader = new FileReader();
                 reader.onload = (e) => {
                     previewImg.src = e.target.result;
-                    previewImg
-                        .classList
-                        .remove("hidden");
-                    dropText
-                        .classList
-                        .add("hidden");
+                    previewImg.classList.remove("hidden");
+                    dropText.classList.add("hidden");
                 };
                 reader.readAsDataURL(file);
 
@@ -43,9 +39,11 @@
             }
 
             async function uploadImage() {
-                if (!selectedFile) 
-                    return;
-                
+                if (!selectedFile) return;
+
+                loader.classList.remove("hidden"); 
+                result.innerText = "";
+
                 const formData = new FormData();
                 formData.append("image", selectedFile);
 
@@ -63,71 +61,56 @@
                     const frameNo = data.frameNo || "Not found";
                     result.innerText = frameNo;
 
-                    // Auto copy if enabled
+                   
                     if (autoCopy && frameNo !== "Not found") {
-                        await navigator
-                            .clipboard
-                            .writeText(frameNo);
+                        await navigator.clipboard.writeText(frameNo);
                         console.log(`Copied to clipboard: ${frameNo}`);
-
-                        // Change background color temporarily
-                        result
-                            .classList
-                            .add("bg-green-600");
-                        setTimeout(() => {
-                            result
-                                .classList
-                                .remove("bg-green-600");
-                        }, 1000); // 1 second
+                        result.innerText = "Copied!";
                     }
                 } catch (err) {
                     console.error(err);
                     alert("Error extracting Frame No");
+                } finally {
+                    loader.classList.add("hidden");
                 }
             }
 
-            // Click to open file selector (reset before click)
             dropZone.addEventListener("click", () => {
-                fileInput.value = null; // reset input
+                fileInput.value = null;
                 fileInput.click();
             });
 
-            // Handle file input change
+            
             fileInput.addEventListener("change", (e) => {
                 if (e.target.files.length > 0) 
                     handleFile(e.target.files[0]);
                 }
             );
 
-            // Drag & drop
+            // dragdrop
             dropZone.addEventListener("dragover", (e) => {
                 e.preventDefault();
-                dropZone
-                    .classList
-                    .add("border-blue-500", "text-blue-500", "bg-blue-50");
+                dropZone.classList.add("border-blue-500", "text-blue-500", "bg-blue-50");
             });
 
             dropZone.addEventListener("dragleave", () => {
-                dropZone
-                    .classList
-                    .remove("border-blue-500", "text-blue-500", "bg-blue-50");
+                dropZone.classList.remove("border-blue-500", "text-blue-500", "bg-blue-50");
             });
 
             dropZone.addEventListener("drop", (e) => {
                 e.preventDefault();
-                dropZone
-                    .classList
-                    .remove("border-blue-500", "text-blue-500", "bg-blue-50");
+                dropZone.classList.remove("border-blue-500", "text-blue-500", "bg-blue-50");
                 if (e.dataTransfer.files.length > 0) 
                     handleFile(e.dataTransfer.files[0]);
                 }
             );
-            // Copy to clipboard on result click
-             function copyToClipboard() {
+
+            // auto copy 
+            function copyToClipboard() {
                 const text = result.innerText;
                 if (text && text !== "Not found") {
                     try {
-                         navigator.clipboard.writeText(text);
+                        navigator.clipboard.writeText(text);
                         result.innerText = "Copied!";
                     } catch (err) {
                         console.error("Failed to copy: ", err);

@@ -5,15 +5,13 @@
         <title>COPY LENS</title>
         <script src="https://cdn.tailwindcss.com"></script>
     </head>
-    <body class="bg-gray-900  flex items-center justify-center min-h-screen">
-        ">
-        <div class="shadow-lg rounded-xl p-2 w-3/4 text-center">
+    <body class=" flex items-center justify-center min-h-screen">
+       
+        <div class="rounded-xl text-center w-full md:max-w-md bg-gray-900 py-6">
             <h2 class="text-2xl font-bold text-blue-700 mb-6">Upload Image For Frame No</h2>
-
-            <!-- Unified Drop & Upload Zone -->
             <div
                 id="dropZone"
-                class="relative flex items-center justify-center w-full h-80 border-2 border-dashed border-gray-400 rounded-lg text-gray-500 cursor-pointer transition hover:border-blue-500 hover:bg-blue-100 overflow-hidden">
+                class="relative flex items-center justify-center h-80 border-2 border-dashed border-gray-400 rounded-lg text-gray-500 cursor-pointer transition hover:border-blue-500 hover:bg-blue-900 overflow-hidden">
                 <span id="dropText" class="absolute z-10">Drag & drop an image here or click to select</span>
                 <img
                     id="previewImg"
@@ -23,27 +21,30 @@
 
             <div class="flex items-center justify-center">
                 <div class="w-1/2 overflow-hidden">
-                    <p id="alltext" class="text-blue-500">
-                        ALL IAMGE DATA</p>
+                    <p id="alltext" class="text-blue-500 p-2">
+                        All Text From Uploaded Image</p>
                 </div>
 
                 <div class="w-1/2 flex flex-col items-center">
-                    <!-- Result -->
                     <h3 class="text-lg font-semibold text-blue-700 mt-6">Frame No:</h3>
-                    <pre id="result" onclick="copyToClipboard()" class="bg-gray-100 text-centerrounded-lg text-lg text-red-500 mt-2 transition-colors duration-300">Copied!</pre>
+                    <pre id="result" onclick="copyToClipboard()" class="bg-gray-100 text-center rounded-lg text-lg text-red-500 mt-2 transition-colors duration-300">Copied!</pre>
 
-                    <!-- Auto-copy toggle -->
+                    <div id="loader" class="hidden flex items-center mt-2 text-red-500">
+                        <svg class="animate-spin h-5 w-5 mr-2 text-red-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
+                        </svg>
+                        <span>loading.....</span>
+                    </div>
                     <button
                         id="autoCopyBtn"
                         class="mt-4 bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-lg transition">
                         Auto Copy: OFF
                     </button>
                 </div>
-
             </div>
-
         </div>
 
-       <script src="script.js"></script>
+        <script src="script.js"></script>
     </body>
 </html>
