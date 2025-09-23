@@ -8,8 +8,8 @@
     </head>
     <body class="bg-gray-400 flex items-center justify-center min-h-screen">
        
-        <div class="rounded-xl text-center w-full md:max-w-md bg-gray-900 py-10">
-            <h2 class="text-2xl font-bold text-blue-700 mb-6">Upload Image</h2>
+        <div class="rounded-xl text-center w-full md:max-w-md bg-gray-900 py-2 ">
+            <h2 class="text-2xl font-bold text-blue-700 pb-2">Upload Image</h2>
             <div
                 id="dropZone"
                 class="relative flex items-center justify-center h-80 border-2 border-dashed border-gray-400 rounded-lg text-gray-500 cursor-pointer transition hover:border-blue-500 hover:bg-blue-900 overflow-hidden">
@@ -20,14 +20,14 @@
             </div>
             <input type="file" id="fileInput" class="hidden" accept="image/*">
 
-            <div class="flex items-center justify-center">
-                <div class="w-1/2 overflow-hidden">
-                    <p id="alltext" class="text-blue-500 p-2 text-xs">
+            <div class="flex items-center justify-center mt-2">
+                <div class="w-1/2 overflow-hidden border-r border-rose-500 ">
+                    <p id="alltext" class="text-blue-500 p-2 text-xs py-24">
                         All Text From Uploaded Image</p>
                 </div>
 
-                <div class="w-1/2 flex flex-col items-center">
-                    <h3 class="text-lg font-semibold text-blue-700 mt-6">Frame No:</h3>
+                <div class="w-1/2 flex flex-col items-center p-10">
+                    <h3 class="text-lg font-semibold text-blue-700">Frame No:</h3>
                     <pre id="result" onclick="copyToClipboard()" class="bg-gray-100 text-center rounded-lg text-lg text-red-500 mt-2 transition-colors duration-300">Copied!</pre>
 
                     <div id="loader" class="hidden flex items-center mt-2 text-red-500">
@@ -39,7 +39,7 @@
                     </div>
                     <button
                         id="autoCopyBtn"
-                        class="mt-4 bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-lg transition">
+                        class="mt-4 bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-2 rounded-lg transition">
                         Auto Copy: OFF
                     </button>
                 </div>
